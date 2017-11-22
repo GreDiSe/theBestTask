@@ -2,22 +2,20 @@ function showTheBiggestCity(form) {
     let value = form.text.value;
     if(checkError(+value)){
         alert(checkError(+value));
+        removeChildren(document.getElementById("table"));
         return;
     }
-    showList(+value)
-}
-const info = [
-    {city: 'Манила', country: 'Филиппины', population: 24245},
-    {city: 'Токио', country: 'Япония', population: 37900},
-    {city: 'Сеул', country: 'Республика Корея', population: 24105},
-    {city: 'Дели', country: 'Индия', population: 26495},
-    {city: 'Париж', country: 'Франция', population: 10950},
-    {city: 'Лондон', country: 'Великобритания', population: 10470},
-    {city: 'Карачи', country: 'Пакистан', population: 23545},
-    {city: 'Шанхай', country: 'КНР', population: 23390},
-    {city: 'Гонконг', country: 'КНР', population: 7330},
-    {city: 'Джакарта', country: 'Индонезия', population: 31760}];
 
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'info.json', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState !== 4) return;
+        let phones = JSON.parse(xhr.responseText);
+        showList(phones, +value);
+    };
+    xhr.send();
+}
 
 function sortForPopulation(a, b) {return a.population <= b.population;}
 function checkError(value) {
@@ -28,7 +26,7 @@ function checkError(value) {
         return("Слишком большее число");
     }
 }
-function showList(value) {
+function showList(info, value) {
     info.sort(sortForPopulation);
     removeChildren(document.getElementById("table"));
 
