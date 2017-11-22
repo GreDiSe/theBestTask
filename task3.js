@@ -1,7 +1,7 @@
 function map(func, array) {
     let result = [];
     for(let i = 0; i < array.length; i++){
-        result[result.length] = func(array[i]);
+        result.push( func(array[i]) );
     }
     return result;
 }

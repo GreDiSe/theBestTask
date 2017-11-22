@@ -1,7 +1,7 @@
 function take(gen, x) {
     let result = [];
     for(let i = 0; i < x; i++){
-        result[result.length] = gen();
+        result.push(gen())
     }
     return result;
 }
